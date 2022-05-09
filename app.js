@@ -16,6 +16,20 @@ const showMessage = (text, status) => {
   }, 1000);
 };
 
+// finding data from localstorage
+const getTodo = () => {
+  return localStorage.getItem("todoList")
+    ? JSON.parse(localStorage.getItem("todoList"))
+    : [];
+};
+
+// to delete
+const deleteItem = (e) => {
+  const selectedTodo = e.target.parentElement.parentElement.parentElement;
+  todoList.removeChild(selectedTodo);
+  showMessage("Todo is removed.", "removing");
+};
+
 // creating New Element
 function createElement(inputValue, todoId) {
   const todoNewElement = document.createElement("li");
@@ -25,9 +39,13 @@ function createElement(inputValue, todoId) {
   <span> 
   ${inputValue} 
   </span>
-  <span> <button> <i class="fa fa-trash"> </i> </button> </span>`;
+  <span> <button> <i class="fa fa-trash" id="delete-button"> </i> </button> </span>`;
   todoList.appendChild(todoNewElement);
   showMessage("New todo is added.", "adding");
+
+  //to delete an item
+  const deleteTodo = todoList.querySelector("#delete-button");
+  deleteTodo.addEventListener("click", deleteItem);
 
   //storing every element on local Storage
   /* let todos = localStorage.getItem("todoList");
@@ -41,9 +59,8 @@ function createElement(inputValue, todoId) {
   } */
 
   //easy way to add every item on localStorage
-  const todos = localStorage.getItem("todoList")
-    ? JSON.parse(localStorage.getItem("todoList"))
-    : [];
+
+  const todos = getTodo();
   todos.push({ todoId, inputValue });
   localStorage.setItem("todoList", JSON.stringify(todos));
   todoInput.value = "";
