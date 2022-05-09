@@ -1,4 +1,4 @@
-body {
+* {
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -23,8 +23,9 @@ body {
 .todo-title {
   text-align: center;
   font-size: 25px;
+  margin-bottom: 1rem;
 }
-.todo-body #todo-input {
+.todo-input #todo-input {
   width: 70%;
   border: none;
   height: 30px;
@@ -33,7 +34,7 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
 }
-.todo-body #todo-add {
+.todo-input #todo-add {
   width: 22%;
   height: 40px;
   font-size: 20px;
@@ -43,11 +44,33 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-.todo-body #todo-add:hover {
+.todo-input #todo-add:hover {
   background-color: white;
   color: black;
 }
 .todo-list {
   margin-top: 1rem;
-  overflow: scroll;
+}
+.new-li-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px;
+  background-color: rgba(158, 153, 153, 0.133);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.new-li-style:hover {
+  background-color: black;
+}
+button {
+  cursor: pointer;
+}
+span > button {
+  background-color: orange;
+  font-size: 20px;
+  padding: 7px;
+  border-radius: 8px;
+  border: none;
 }
