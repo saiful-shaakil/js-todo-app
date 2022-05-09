@@ -74,3 +74,19 @@ span > button {
   border-radius: 8px;
   border: none;
 }
+.message-for-adding {
+  background-color: #ddffdd;
+  border-left: 6px solid #04aa66;
+  padding: 5px 10px;
+  color: black;
+  margin: 10px 0;
+  font-size: 20px;
+}
+.message-for-removing {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+  padding: 5px 10px;
+  color: black;
+  margin: 10px 0;
+  font-size: 20px;
+}

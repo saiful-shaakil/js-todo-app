@@ -4,6 +4,17 @@ const todoForm = document.querySelector(".todo-body");
 const todoInput = document.getElementById("todo-input");
 const todoAddInput = document.getElementById("todo-add");
 const todoList = document.querySelector(".lists");
+const message = document.getElementById("message");
+
+// show message
+const showMessage = (text, status) => {
+  message.innerText = text;
+  message.classList.add(`message-for-${status}`);
+  setTimeout(() => {
+    message.innerText = "";
+    message.classList.remove(`message-for-${status}`);
+  }, 1000);
+};
 
 // creating New Element
 function createElement(inputValue, todoId) {
@@ -16,6 +27,7 @@ function createElement(inputValue, todoId) {
   </span>
   <span> <button> <i class="fa fa-trash"> </i> </button> </span>`;
   todoList.appendChild(todoNewElement);
+  showMessage("New todo is added.", "adding");
 }
 
 // add todo
