@@ -28,6 +28,25 @@ function createElement(inputValue, todoId) {
   <span> <button> <i class="fa fa-trash"> </i> </button> </span>`;
   todoList.appendChild(todoNewElement);
   showMessage("New todo is added.", "adding");
+
+  //storing every element on local Storage
+  /* let todos = localStorage.getItem("todoList");
+  if (todos) {
+    JSON.parse(todos);
+    todos.push({ todoId, inputValue });
+    localStorage.setItem("todoList", JSON.stringify(todos));
+  } else {
+    todos = [];
+    localStorage.setItem("todoList", JSON.stringify(todos));
+  } */
+
+  //easy way to add every item on localStorage
+  const todos = localStorage.getItem("todoList")
+    ? JSON.parse(localStorage.getItem("todoList"))
+    : [];
+  todos.push({ todoId, inputValue });
+  localStorage.setItem("todoList", JSON.stringify(todos));
+  todoInput.value = "";
 }
 
 // add todo
@@ -35,7 +54,7 @@ const addTodo = (e) => {
   e.preventDefault();
   //getting the input value
   const inputValue = todoInput.value;
-  //generating new id for every item
+  //generating unique id for every item
   const todoId = Date.now().toString();
   //calling another function to add every element on list
   createElement(inputValue, todoId);
