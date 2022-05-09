@@ -16,25 +16,6 @@ const showMessage = (text, status) => {
   }, 1000);
 };
 
-// finding data from localstorage
-const getTodos = () => {
-  return localStorage.getItem("todoList")
-    ? JSON.parse(localStorage.getItem("todoList"))
-    : [];
-};
-
-// to delete an item
-const deleteItem = (e) => {
-  const selectedTodo = e.target.parentElement.parentElement.parentElement;
-  todoList.removeChild(selectedTodo);
-  showMessage("Todo is removed.", "removing");
-  //to delete item from localStorage too
-  let todos = getTodos();
-  todos = todos.filter((todo) => todo.todoId !== selectedTodo.id);
-  localStorage.setItem("todoList", JSON.stringify(todos));
-  todoInput.value = "";
-};
-
 // creating New Element
 function createElement(inputValue, todoId) {
   const todoNewElement = document.createElement("li");
@@ -44,13 +25,44 @@ function createElement(inputValue, todoId) {
   <span> 
   ${inputValue} 
   </span>
-  <span> <button> <i class="fa fa-trash" id="delete-button"> </i> </button> </span>`;
+  <span> <button id="delete-button"> <i class="fa fa-trash" > </i> </button> </span>`;
   todoList.appendChild(todoNewElement);
-  showMessage("New todo is added.", "adding");
 
   //to delete an item
   const deleteTodo = todoList.querySelector("#delete-button");
   deleteTodo.addEventListener("click", deleteItem);
+}
+
+// to delete an item
+const deleteItem = (e) => {
+  const selectedTodo = e.target.parentElement.parentElement.parentElement;
+  todoList.removeChild(selectedTodo);
+  showMessage("Todo is removed.", "removing");
+
+  //to delete item from localStorage too
+  let todos = getTodos();
+  todos = todos.filter((todo) => todo.todoId !== selectedTodo.id);
+  localStorage.setItem("todoList", JSON.stringify(todos));
+};
+
+// finding data from localstorage
+const getTodos = () => {
+  return localStorage.getItem("todoList")
+    ? JSON.parse(localStorage.getItem("todoList"))
+    : [];
+};
+
+// add todo
+const addTodo = (e) => {
+  e.preventDefault();
+  //getting the input value
+  const inputValue = todoInput.value;
+
+  //generating unique id for every item
+  const todoId = Date.now().toString();
+  //calling another function to add every element on list
+  createElement(inputValue, todoId);
+  showMessage("New todo is added.", "adding");
 
   //storing every element on local Storage
   /* let todos = localStorage.getItem("todoList");
@@ -69,17 +81,6 @@ function createElement(inputValue, todoId) {
   todos.push({ todoId, inputValue });
   localStorage.setItem("todoList", JSON.stringify(todos));
   todoInput.value = "";
-}
-
-// add todo
-const addTodo = (e) => {
-  e.preventDefault();
-  //getting the input value
-  const inputValue = todoInput.value;
-  //generating unique id for every item
-  const todoId = Date.now().toString();
-  //calling another function to add every element on list
-  createElement(inputValue, todoId);
 };
 //to reload todos after refreshing the page
 const reloadTodos = () => {
