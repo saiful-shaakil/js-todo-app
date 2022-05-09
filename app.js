@@ -17,17 +17,22 @@ const showMessage = (text, status) => {
 };
 
 // finding data from localstorage
-const getTodo = () => {
+const getTodos = () => {
   return localStorage.getItem("todoList")
     ? JSON.parse(localStorage.getItem("todoList"))
     : [];
 };
 
-// to delete
+// to delete an item
 const deleteItem = (e) => {
   const selectedTodo = e.target.parentElement.parentElement.parentElement;
   todoList.removeChild(selectedTodo);
   showMessage("Todo is removed.", "removing");
+  //to delete item from localStorage too
+  let todos = getTodos();
+  todos = todos.filter((todo) => todo.todoId !== selectedTodo.id);
+  localStorage.setItem("todoList", JSON.stringify(todos));
+  todoInput.value = "";
 };
 
 // creating New Element
@@ -60,7 +65,7 @@ function createElement(inputValue, todoId) {
 
   //easy way to add every item on localStorage
 
-  const todos = getTodo();
+  const todos = getTodos();
   todos.push({ todoId, inputValue });
   localStorage.setItem("todoList", JSON.stringify(todos));
   todoInput.value = "";
@@ -76,6 +81,12 @@ const addTodo = (e) => {
   //calling another function to add every element on list
   createElement(inputValue, todoId);
 };
+//to reload todos after refreshing the page
+const reloadTodos = () => {
+  const todos = getTodos();
+  todos.map((todo) => createElement(todo.inputValue, todo.todoId));
+};
 
 //adding listeners to the submit button
 todoForm.addEventListener("submit", addTodo);
+window.addEventListener("DOMContentLoaded", reloadTodos);
